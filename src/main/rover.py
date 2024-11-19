@@ -1,3 +1,5 @@
+from typing import Any
+
 class Rover:
     def __init__(self):
         self.x = 0  # Position x (position x = 0 de base)
@@ -5,15 +7,15 @@ class Rover:
         self.direction = 'N' # Orientation : N, S, E, W :
         self.icon = '🚙'
 
-    def move(self, commandMove):
+    def moveHandler(self, action : str):
         if self.direction == 'N':
-            self.y += (treatMove(commandMove))
+            self.y += (treatMove(action))
         elif self.direction == 'S':
-            self.y -= (treatMove(commandMove))
+            self.y -= (treatMove(action))
         elif self.direction == 'E':
-            self.x += (treatMove(commandMove))
+            self.x += (treatMove(action))
         elif self.direction == 'W':
-            self.x -= (treatMove(commandMove))
+            self.x -= (treatMove(action))
 
     def turn(self, commandTurn):
         directions = ['N', 'W', 'S', 'E']
@@ -22,11 +24,11 @@ class Rover:
         elif commandTurn == 'r':
             self.direction = directions[(directions.index(self.direction) - 1) % 4]
 
-    def moveHandler(self, command : str):
-        listActions = command.split()
-        for action in command:
+    def move(self, commandStr : str):
+        commandLst = isList(commandStr)
+        for action in commandLst:
             if action in ['f', 'b']:
-                self.move(action)
+                self.moveHandler(action)
             elif action in ['l', 'r']:
                 self.turn(action)
 
@@ -39,3 +41,9 @@ def treatMove(commandMove):
         return 1
     elif commandMove == 'b':
         return -1
+
+def isList(obj : str | list) -> Any:
+    if isinstance(obj, list):
+        return obj
+    else:
+        return list(obj)

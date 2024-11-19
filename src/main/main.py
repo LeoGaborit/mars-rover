@@ -16,6 +16,6 @@ from rover import *
 
 marsRover = Rover()
 marsRover.afficher_position()
-marsRover.move('ffrfflfff')
+marsRover.move('ffrfflfffrbb')
 marsRover.afficher_position()
 
