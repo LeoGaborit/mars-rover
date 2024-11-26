@@ -1,45 +1,43 @@
 from random import randint
 
+class MapHandler:
+    def __init__(self, square=11, numb_obstacle=8):
+        self.square = square
+        self.numb_obstacle = numb_obstacle
+        self.map = []
+        self.obstacle1 = "•"
+        self.obstacle2 = "†"
+        self.generate_map()
 
-map : list
-square = 11
-obstacle1 = "•"
-obstacle2 = "†"
-numbObstacle = 8
+    def generate_map(self):
+        self.map = []
+        for i in range(self.square):
+            self.map.append([])
+            for j in range(self.square):
+                self.map[i].append("▓")
 
-#générer un tableau de 10*10
+        # place the map center
+        self.map[self.square // 2][self.square // 2] = "X"
+        self.map[0][self.square // 2] = "N"
+        self.map[self.square // 2][0] = "W"
+        self.map[self.square - 1][self.square // 2] = "S"
+        self.map[self.square // 2][self.square - 1] = "E"
 
-def generate_map():
-    global map
-    map = []
-    for i in range(square):
-        map.append([])
-        for j in range(square):
-            map[i].append("▓")
+        # add obstacles randomly on the map
+        for _ in range(self.numb_obstacle):
+            x = randint(0, self.square - 1)
+            y = randint(0, self.square - 1)
+            obstacle = randint(1, 2)
+            if obstacle == 1:
+                self.map[x][y] = self.obstacle1
+            else:
+                self.map[x][y] = self.obstacle2
 
-    # place the map center
-    map[square // 2][square // 2]=("X")
-    map[0][square // 2]=("N")
-    map[square // 2][0]=("W")
-    map[square - 1][square // 2]=("S")
-    map[square // 2][square - 1]=("E")
+    def display_map(self):
+        for i in range(self.square):
+            for j in range(self.square):
+                print(self.map[i][j], end=" ")
+            print()
 
-    # add 4 obstacles randomly on the map
-    for i in range (numbObstacle):
-        x = randint(0, square - 1)
-        y = randint(0, square - 1)
-        obstacle = randint(1, 2)
-        if obstacle == 1:
-            map[x][y] = obstacle1
-        else:
-            map[x][y] = obstacle2
-        i -= 1
-
-def display_map():
-    for i in range(square):
-        for j in range(square):
-            print(map[i][j], end=" ")
-        print()
-
-generate_map()
-display_map()
+    def getMapSize(self):
+        return self.square

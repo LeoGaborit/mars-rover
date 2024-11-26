@@ -1,4 +1,11 @@
-from typing import Any
+from src.main.ressources import isList, oddHandler
+
+
+def treatMove(commandMove):
+    if commandMove == 'f':
+        return 1
+    elif commandMove == 'b':
+        return -1
 
 class Rover:
     def __init__(self):
@@ -10,12 +17,16 @@ class Rover:
     def moveHandler(self, action : str):
         if self.direction == 'N':
             self.y += (treatMove(action))
+            self.mapBorderHandler()
         elif self.direction == 'S':
             self.y -= (treatMove(action))
+            self.mapBorderHandler()
         elif self.direction == 'E':
             self.x += (treatMove(action))
+            self.mapBorderHandler()
         elif self.direction == 'W':
             self.x -= (treatMove(action))
+            self.mapBorderHandler()
 
     def turn(self, commandTurn):
         directions = ['N', 'W', 'S', 'E']
@@ -35,15 +46,26 @@ class Rover:
     def afficher_position(self):
         print(f"Position : ({self.x}, {self.y}), Direction : {self.direction}")
 
+    def obstacleDetection(self, map):
+        if map[self.x][self.y] != "▓":
+            print('Obstacle détecté')
+            self.moveHandler('f')
+            print('Obstacle évité')
+            self.afficher_position()
 
-def treatMove(commandMove):
-    if commandMove == 'f':
-        return 1
-    elif commandMove == 'b':
-        return -1
+    def mapBorderHandler(self, nb):
+        if self.x < oddHandler((nb // 2))-nb: # left border
+            self.x = oddHandler((nb // 2))
 
-def isList(obj : str | list) -> Any:
-    if isinstance(obj, list):
-        return obj
-    else:
-        return list(obj)
+        elif self.x > oddHandler((nb + 1)): # right border
+            self.x = oddHandler((nb // 2))-nb
+
+        if self.y < oddHandler((nb // 2))-nb: # bottom border
+            self.y = oddHandler((nb // 2))
+
+        elif self.y >= oddHandler((nb + 1)): # top border
+            self.y = oddHandler((nb // 2))-nb
+
+
+
+
