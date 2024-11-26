@@ -10,6 +10,7 @@ class MapHandler:
         self.generate_map()
 
     def generate_map(self):
+        print("Generating map...")
         self.map = []
         for i in range(self.size):
             self.map.append([])
@@ -39,5 +40,11 @@ class MapHandler:
                 print(self.map[i][j], end=" ")
             print()
 
+    def addRoverToMap(self, x, y, icon):
+        self.map[y][x] = icon
+
     def getMapSize(self):
         return self.size
+
+    def getCoord(self, x, y):
+        return self.map[y][x]

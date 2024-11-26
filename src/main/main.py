@@ -13,18 +13,16 @@ Implémenter la détection d'obstacles : creer fonction qui détecte si un obsta
 """
 
 from rover import *
-from mapHandler import *
 
 marsRover = Rover()
-roverMap = MapHandler()
 
-mapSize : int = roverMap.getMapSize()
+mapSize : int = marsRover.mapHandler.getMapSize()
 
 marsRover.afficher_position()
-marsRover.move('ffffffffff')
+marsRover.move('f')
 marsRover.afficher_position()
 
 print("\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n")
 
-roverMap.display_map()
+marsRover.mapHandler.display_map()
 
